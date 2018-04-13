@@ -1,0 +1,22 @@
+#!/bin/env node
+
+const path = require('path');
+const fs = require('fs');
+
+const fileExists = fs.existsSync
+
+function check(dir, filename) {
+  const file = path.join(dir, filename);
+  if (fileExists(file)) {
+    console.log('yes');
+  } else {
+    const parent = path.resolve(dir, '..');
+    if (parent === '/') {
+      console.log('no');
+    } else {
+      check(parent, filename);
+    }
+  }
+}
+
+check(process.cwd(), 'Gemfile');
